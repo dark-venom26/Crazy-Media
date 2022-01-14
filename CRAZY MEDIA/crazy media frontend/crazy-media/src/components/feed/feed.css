@@ -1,0 +1,14 @@
+.feed{
+    flex: 5;
+}
+
+.feedWrapper{
+    padding: 20px;
+}
+
+.noPost{
+    display: flex;
+    width: fit-content;
+    margin: 10px auto;
+    font-weight: 500;
+}
