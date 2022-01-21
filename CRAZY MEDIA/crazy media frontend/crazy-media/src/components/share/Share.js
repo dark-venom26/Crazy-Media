@@ -14,7 +14,7 @@ function Share() {
                     <div className="shareOptions">
                         <div className="shareOption">
                             <PermMedia htmlColor="tomato" className="shareIcon"/>
-                            <div className="shareOptionText">Photo or Video</div>
+                            <div className="shareOptionText">Photo / Video</div>
                         </div>
                         <div className="shareOption">
                             <Label htmlColor="blue" className="shareIcon"/>

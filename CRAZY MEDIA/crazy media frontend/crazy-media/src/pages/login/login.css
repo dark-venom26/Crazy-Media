@@ -54,11 +54,12 @@
     border: 0;
     border-bottom: 1px solid #1c1715;
     border-radius: 5px;
-    background-color: #39373ab8;
+    background-color: #faf1ffb8;
     font-size: 18px;
     padding: 0 20px 0 0;
     outline: none;
-    color: white;
+    color: black;
+    
 }
 
 .loginButton{
@@ -70,6 +71,14 @@
     font-size: 20px;
     font-weight: 500;
     cursor: pointer;
+}
+
+.loginButton:focus{
+    outline: none;
+}
+
+.loginButton:disabled{
+    cursor: not-allowed;
 }
 
 .loginForget{
@@ -88,4 +97,6 @@
     font-size: 20px;
     font-weight: 500;
     cursor: pointer;
+    text-decoration: none;
+
 }

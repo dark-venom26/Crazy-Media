@@ -32,8 +32,12 @@ function Rightbar(props) {
                 <h4 className="rightbarTitle">User Information</h4>
                 <div className="rightbarInfo">
                     <div className="rightbarInfoItem">
-                        <span className="rightbarInfoKey">City:</span>
-                        <span className="rightbarInfoValue">{props.user.city}</span>
+                        <span className="rightbarInfoKey">Email:</span>
+                        <span className="rightbarInfoValue">{props.user.email}</span>
+                    </div>
+                    <div className="rightbarInfoItem">
+                        <span className="rightbarInfoKey">Gender:</span>
+                        <span className="rightbarInfoValue">{props.user.gender===1 ? "Male" : props.user.gender===2 ? "Female" : "Other"}</span>
                     </div>
                     <div className="rightbarInfoItem">
                         <span className="rightbarInfoKey">From:</span>
@@ -67,7 +71,7 @@ function Rightbar(props) {
     return (
         <div className="rightbar">
             <div className="rightbarWrapper">
-                {props.user ? <ProfileRightbar/> : <HomeRightbar/>}
+                {props.user ? <ProfileRightbar /> : <HomeRightbar/>}
             </div>
         </div>
     )
