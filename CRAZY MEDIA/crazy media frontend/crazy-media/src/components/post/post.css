@@ -1,8 +1,9 @@
 .post{
     width: 100%;
     border-radius: 10px;
-    -webkit-box-shadow: 1px 1px 15px -5px rgba(0,0,0,0.8); 
-    box-shadow: 1px 1px 15px -5px rgba(0,0,0,0.8);
+    -webkit-box-shadow: 10px 6px 38px -14px rgba(130,130,130,1);
+    -moz-box-shadow: 10px 6px 38px -14px rgba(130,130,130,1);
+    box-shadow: 10px 6px 38px -14px rgba(130,130,130,1);
     margin: 15px 0;
 }
 

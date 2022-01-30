@@ -8,16 +8,24 @@ import {
   Route,
   Navigate
 } from 'react-router-dom'
+import { useContext } from "react";
+import { AuthContext } from "./context/AuthContext";
 
 
 function App() {
+  const {user} = useContext(AuthContext);
   const authToken = localStorage.getItem('auth-token');
+  var login = false;
+  if((authToken !== undefined && authToken !== null) || user?.success){
+    login = true
+  }
+
   return (
     <Router>
         <Routes>
-          <Route path="/" element={authToken ? <Home /> : <Register/>} />
-          <Route exact path="/login" element={authToken ? <Navigate to="/" /> : <Login />} />
-          <Route exact path="/register" element={authToken ? <Navigate to="/" /> : <Register />} />
+          <Route path="/" element={login ? <Home /> : <Navigate to="/register"/>} />
+          <Route exact path="/login" element={login ? <Navigate to="/" /> : <Login />} />
+          <Route exact path="/register" element={login ? <Navigate to="/" /> : <Register />} />
           <Route exact path="/profile/:username" element={<Profile />} />
         </Routes>
     </Router>

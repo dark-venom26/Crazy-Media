@@ -1,4 +1,4 @@
-import { axios } from 'axios';
+import axios from 'axios';
 import { useState, useEffect } from 'react';
 import Post from '../post/Post'
 import Share from '../share/Share'
@@ -12,16 +12,15 @@ function Feed(props) {
         const fetchPosts = async ()=>{
             const config = {
                 headers: {
+                    "Access-Control-Allow-Origin": "*",
                     "auth-token": authToken
                 }
             }
-            // try{
-                // props.username ? await axios.get("/post/profile/" + props.username) : 
-                // await axios.get("http://localhost:5000/api/post/timeline/all", config).then((res)=>setPosts(res.data));
-                
-            // }catch(err){
-            //     console.log(err);
-            // }
+            try{
+                props.username ? await axios.get("/post/profile/" + props.username) : await axios.get("http://localhost:5000/api/post/timeline/all", config).then((res)=>{ setPosts(res.data)}).catch((err)=>{console.log(err);})
+            }catch(err){
+                console.log(err);
+            }
         }
         fetchPosts()
     }, [props.username, authToken])
@@ -29,7 +28,7 @@ function Feed(props) {
         <div className="feed">
             <div className="feedWrapper">
                 <Share/>
-                {<p className='noPost'>No posts available</p> || posts.map((post)=>{
+                {posts.length === 0 ? <p className='noPost'>No posts available</p> : posts.map((post)=>{
                     return <Post key={post._id} post={post}/>
                 })}
             </div>

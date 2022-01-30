@@ -4,8 +4,9 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 const fetchuser = (req, res, next)=>{
     const token = req.header('auth-token');
+    const success = false;
     if(!token){
-        return res.status(400).json({errors: "Please authenticate using a valid token"})
+        return res.status(400).json({success, "errors": "Please authenticate using a valid token"})
     }
 
     try{
@@ -13,7 +14,7 @@ const fetchuser = (req, res, next)=>{
         req.user = data.user;
         next();
     }catch(err){
-        res.status(401).send({error: "Please authenticate using a valid token"});
+        res.status(401).send({success, "errors": "Please authenticate using a valid token"});
     }
 }
 

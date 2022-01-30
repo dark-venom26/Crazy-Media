@@ -1,12 +1,21 @@
 import './topbar.css'
 import { Search, Person, Chat, Notifications } from '@material-ui/icons'
 import { Link } from 'react-router-dom'
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import { logoutCall } from '../../apiCalls';
 
 function Topbar() {
+    const {dispatch} = useContext(AuthContext);
+    const logout = () => {
+        localStorage.removeItem("auth-token");
+        logoutCall(dispatch);
+    }
     return (
         <div className="topbarContainer">
             <div className="topbarLeft">
                 <Link to="/" className="logo">Crazy Media</Link>
+                <Link to="/login" onClick={logout} className="topbarLink logout">Logout</Link>
             </div>
             <div className="topbarCenter">
                 <div className="searchBar">

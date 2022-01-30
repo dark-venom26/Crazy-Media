@@ -51,6 +51,12 @@
     cursor: pointer;
 }
 
+.logout{
+    color: white;
+    margin: 0 0 0 63px;
+    text-decoration: none;
+}
+
 .topbarIconItem{
     margin-right: 15px;
     cursor: pointer;

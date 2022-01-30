@@ -1,9 +1,9 @@
 import './post.css'
 import { MoreVert } from '@material-ui/icons'
 import { useState, useEffect } from 'react'
-import { axios } from 'axios';
 import { format } from 'timeago.js';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 require('dotenv').config()
 
 function Post(props) {
@@ -70,7 +70,7 @@ function Post(props) {
                 <div className="postTop">
                     <div className="postTopLeft">
                         <Link to={`profile/${user.username}`}>
-                        <img className="postProfileImg" src={user.profilePicture || PF + "persons/avtar.png"} alt="" />
+                        <img className="postProfileImg" src={user.profilePicture ? PF + user.profilePicture : user?.gender ===2 ? PF + "persons/woman.png" : PF + "persons/man.png"} alt="" />
                         </Link>
                         <span className="postUsername">{user.username}</span>
                         <span className="postDate">{format(props.post.createdAt)}</span>
@@ -81,7 +81,7 @@ function Post(props) {
                 </div>
                 <div className="postCenter">
                     <span className="postText">{props.post.desc}</span>
-                    <img className="postImg" src={PF + props.post.img} alt="" />
+                    <img className="postImg" src={PF + props.post?.img} alt="" />
                 </div>
                 <div className="postBottom">
                     <div className="postBottomLeft">
