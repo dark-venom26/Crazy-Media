@@ -19,7 +19,7 @@ function Login() {
     }
     
     useEffect(()=>{
-        if(authToken.success){
+        if(authToken?.success && user?.success){
             navigate('/');
         }
     })
@@ -38,7 +38,7 @@ function Login() {
                 <div className="loginRight">
                     <form className="loginContainer" onSubmit={handleClick}>
                         <input type="email" placeholder="Email" ref={email} className="loginInput" required/>
-                        <input type="password" placeholder="Password" minLength="6" ref={password} className="loginInput" required/>
+                        <input type="password" placeholder="Password" minLength="5" ref={password} className="loginInput" required/>
                         <button className="loginButton" type='submit' disabled={isFetching}>{isFetching ? <CircularProgress color="inherit" size="25px"/> : "Log In"}</button>
                         <span className="loginForget">Forget Password?</span>
                         <Link to="/register" className="registerButton">Create a New Account</Link>

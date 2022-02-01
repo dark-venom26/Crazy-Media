@@ -1,0 +1,2 @@
+{"_id":{"$oid":"61e7bee61781913d20037d18"},"userId":{"$oid":"61e7b89c1781913d20037cff"},"desc":"Lovely wheather today","likes":["61e7b89c1781913d20037cff"],"hearts":[],"createdAt":{"$date":"2022-01-19T07:33:58.176Z"},"updatedAt":{"$date":"2022-01-23T14:00:43.868Z"},"__v":0,"img":"posts/2.jpg"}
+{"_id":{"$oid":"61e938c5cd0288e79b0f1bbc"},"userId":{"$oid":"61e7b89c1781913d20037cff"},"desc":"Driving First time!","likes":[],"hearts":[],"createdAt":{"$date":"2022-01-20T10:26:13.491Z"},"updatedAt":{"$date":"2022-01-23T14:02:13.953Z"},"__v":0,"img":"posts/4.jpg"}

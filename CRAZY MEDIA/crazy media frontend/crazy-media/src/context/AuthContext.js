@@ -2,8 +2,8 @@ import { createContext, useReducer } from "react";
 import AuthReducer from "./AuthReducer";
 
 const INITIAL_STATE = {
-    authToken: {success: false, authToken: null},
-    user: {success: false, user: null},
+    authToken: {"success": false, "authToken": null},
+    user: {"success": false, "user": null},
     isFetching: false,
     error: false
 };
