@@ -4,18 +4,19 @@ import { Link } from 'react-router-dom'
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { logoutCall } from '../../apiCalls';
+require('dotenv').config()
 
 function Topbar() {
-    const {dispatch} = useContext(AuthContext);
+    const {user, dispatch} = useContext(AuthContext);
+    const PF = process.env.REACT_APP_PUBLIC_FOLDER
     const logout = () => {
-        localStorage.removeItem("auth-token");
         logoutCall(dispatch);
     }
     return (
         <div className="topbarContainer">
             <div className="topbarLeft">
                 <Link to="/" className="logo">Crazy Media</Link>
-                <Link to="/login" onClick={logout} className="topbarLink logout">Logout</Link>
+                <Link to="/login" onClick={logout} className="topbarLink navigationLink">Logout</Link>
             </div>
             <div className="topbarCenter">
                 <div className="searchBar">
@@ -25,8 +26,8 @@ function Topbar() {
             </div>
             <div className="topbarRight">
                 <div className="topbarLinks">
-                    <span className="topbarLink">Home</span>
-                    <span className="topbarLink">Timeline</span>
+                    <Link to={`/profile/${user.user?.username}`} className="topbarLink navigationLink">Home</Link>
+                    <Link to="/" className="topbarLink navigationLink">Timeline</Link>
                 </div>
                 <div className="topbarIcons">
                     <div className="topbarIconItem">
@@ -42,7 +43,9 @@ function Topbar() {
                         <span className="topbarIconBadge">4</span>
                     </div>
                 </div>
-                <img src="/assets/users/1.jpg" alt="" className="topbarImg" />
+                <Link to={`profile/${user.user?.username}`}>
+                    <img src={user.user?.profilePicture ? PF + user.user?.profilePicture : user.user?.gender ===2 ? PF + "persons/woman.png" : PF + "persons/man.png"} alt="" className="topbarImg" />
+                </Link>
             </div>
         </div>
     )

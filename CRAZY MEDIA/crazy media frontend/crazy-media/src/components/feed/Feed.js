@@ -7,23 +7,25 @@ import './feed.css'
 function Feed(props) {
     const [posts, setPosts] = useState([]);
     const authToken = localStorage.getItem("auth-token");
+    const authTokenData = JSON.parse(authToken);
     
     useEffect(() => {
         const fetchPosts = async ()=>{
             const config = {
                 headers: {
                     "Access-Control-Allow-Origin": "*",
-                    "auth-token": authToken
+                    "auth-token": authTokenData.authToken
                 }
             }
             try{
-                props.username ? await axios.get("/post/profile/" + props.username) : await axios.get("http://localhost:5000/api/post/timeline/all", config).then((res)=>{ setPosts(res.data)}).catch((err)=>{console.log(err);})
+                const res = props.username ? await axios.get("/post/profile/" + props.username) : await axios.get("/post/timeline/all", config);
+                setPosts(res.data);
             }catch(err){
                 console.log(err);
             }
         }
         fetchPosts()
-    }, [props.username, authToken])
+    }, [props.username, authTokenData.authToken])
     return (
         <div className="feed">
             <div className="feedWrapper">

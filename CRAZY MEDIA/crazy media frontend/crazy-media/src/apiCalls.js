@@ -9,13 +9,13 @@ export const loginCall = async (userCredential, dispatch) => {
         if(credentials.data.success){
             const config = {
                 headers: {
-                  "Access-Control-Allow-Origin": "*",
                   "auth-token": credentials.data.authToken
                 }
             };
             const userDetails = await axios.get("auth/getuser", config);
+            const authTokenData = JSON.stringify(credentials.data)
+            localStorage.setItem("auth-token", authTokenData);
             dispatch({type: "GET_USER", payload: userDetails.data});
-            localStorage.setItem("auth-token", credentials.data.authToken);
         }
     }catch(err){
         dispatch({type: "LOGIN_FAILURE", payload: err});
@@ -23,6 +23,7 @@ export const loginCall = async (userCredential, dispatch) => {
 }
 
 export const logoutCall = async (dispatch) => {
+    localStorage.removeItem("auth-token");
     dispatch({type: "LOGOUT_SUCCESS"});
 }
 

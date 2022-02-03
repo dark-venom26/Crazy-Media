@@ -10,14 +10,19 @@ import {
 } from 'react-router-dom'
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
+import { getUserCall } from "./apiCalls";
 
 
 function App() {
-  const {user} = useContext(AuthContext);
+  const {user, dispatch} = useContext(AuthContext);
   const authToken = localStorage.getItem('auth-token');
+  const authTokenData = JSON.parse(authToken);
   var login = false;
-  if((authToken !== undefined && authToken !== null) || user?.success){
+  if(authTokenData?.success || user?.success){
     login = true
+  }
+  if(authTokenData?.success && user?.success === false){
+    getUserCall(authTokenData.authToken, dispatch)
   }
 
   return (

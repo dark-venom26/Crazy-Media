@@ -1,28 +1,41 @@
 import './post.css'
 import { MoreVert } from '@material-ui/icons'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { format } from 'timeago.js';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { AuthContext } from '../../context/AuthContext';
 require('dotenv').config()
 
 function Post(props) {
     
+    const [user, setUser] = useState({})
+    const {user:currentUser} = useContext(AuthContext)
+    const authToken = localStorage.getItem("auth-token");
+    const authTokenData = JSON.parse(authToken);
+    const config = {
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+            "auth-token": authTokenData.authToken
+        }
+    }
+
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
     const likeHeart = {
         'like' : props.post.likes.length,
         'heart': props.post.hearts.length,
     }
 
     const isLikedHeart = {
-        'like' : false,
-        'heart': false
+        'like' : props.post.likes.includes(currentUser.user._id),
+        'heart': props.post.hearts.includes(currentUser.user._id)
     }
 
     const [like, setLike] = useState(likeHeart)
-    const [isLiked, setIsLiked] = useState(isLikedHeart)
+    const [isLiked, setIsLiked] =  useState(isLikedHeart)
 
-    const likeHeartHandler = (newLikeHeart, isNewLikedHeart) =>{
+    const likeHeartHandler = async (newLikeHeart, isNewLikedHeart) =>{
         setLike(newLikeHeart)
         setIsLiked(isNewLikedHeart)
     }
@@ -37,6 +50,11 @@ function Post(props) {
             'like': isLiked.like ? false : true,
             'heart': false
         }
+        axios.put('/post/'+props.post._id+'/like', {}, config)
+        if(isLiked.heart){
+            axios.put('/post/'+props.post._id+'/heart', {}, config)
+        }
+
         likeHeartHandler(newLikeHeart, isNewLikedHeart)
     }
 
@@ -50,12 +68,14 @@ function Post(props) {
             'like': false,
             'heart': isLiked.heart ? false : true
         }
+        axios.put('/post/'+props.post._id+'/heart', {}, config)
+        if(isLiked.like){
+            axios.put('/post/'+props.post._id+'/like', {}, config)
+        }
+
         likeHeartHandler(newLikeHeart, isNewLikedHeart)
-
     }
-
-    const [user, setUser] = useState({})
-
+    
     useEffect(() => {
         const fetchUser = async ()=>{
             const res = await axios.get(`/user?userId=${props.post.userId}`)
@@ -69,7 +89,7 @@ function Post(props) {
             <div className="postWrapper">
                 <div className="postTop">
                     <div className="postTopLeft">
-                        <Link to={`profile/${user.username}`}>
+                        <Link to={`/profile/${user.username}`}>
                         <img className="postProfileImg" src={user.profilePicture ? PF + user.profilePicture : user?.gender ===2 ? PF + "persons/woman.png" : PF + "persons/man.png"} alt="" />
                         </Link>
                         <span className="postUsername">{user.username}</span>

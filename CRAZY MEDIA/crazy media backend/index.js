@@ -8,6 +8,7 @@ const userRoute = require("./routes/user")
 const authRoute = require("./routes/auth")
 const postRoute = require("./routes/post")
 const cors = require('cors')
+const multer = require('multer')
 
 dotenv.config();
 
@@ -22,6 +23,25 @@ app.use(express.json());
 app.use(helmet());
 app.use(morgan("common"));
 app.use(cors());
+
+// File Uploading in the backend server using multer
+const storage = multer.diskStorage({
+    destination: (req, file, cb)=>{
+        cb(null, "public/images")
+    },
+    filename: (req, file, cb)=>{
+        cb(null, req.body.name)
+    }
+})
+
+const upload = multer();
+app.post("/api/upload", upload.single("file"), (req,res)=>{
+    try{
+        return res.status(200).json('File uploaded successfully.')
+    }catch(err){
+        console.log(err);
+    }
+})
 
 app.use("/api/user",userRoute)
 app.use("/api/auth",authRoute)

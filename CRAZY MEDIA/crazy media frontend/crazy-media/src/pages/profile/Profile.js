@@ -11,14 +11,20 @@ function Profile() {
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
     const [user, setUser] = useState({});
     const username = useParams().username;
+    const authToken = localStorage.getItem('auth-token');
 
     useEffect(() => {
         const fetchUser = async ()=>{
-            const res = await axios.get(`/user?username=${username}`)
+            const config = {
+                headers: {
+                  "auth-token": authToken
+                }
+            };
+            const res = await axios.get(`/user?username=${username}`, config)
             setUser(res.data)
         }
         fetchUser()
-    }, [username])
+    }, [username, authToken])
 
     return (
         <>
@@ -29,7 +35,7 @@ function Profile() {
                     <div className="profileRightTop">
                         <div className="profileCover">
                             <img className="profileCoverImage" src={user.coverPicture || PF + "persons/noCover.jpg"} alt="" />
-                            <img className="profileUserImage" src={user.profilePicture || user?.gender === 2 ? PF + "persons/woman.png" : PF + "persons/man.png"} alt="" />
+                            <img className="profileUserImage" src={user.profilePicture ? PF + user.profilePicture : user?.gender ===2 ? PF + "persons/woman.png" : PF + "persons/man.png"} alt="" />
                         </div>
                         <div className="profileInfo">
                             <h4 className="profileInfoName">{user.username}</h4>
