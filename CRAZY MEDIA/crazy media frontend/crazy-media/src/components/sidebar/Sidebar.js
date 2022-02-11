@@ -1,9 +1,12 @@
 import { Bookmark, Chat, Event, Group, HelpOutline, PlayCircleFilled, RssFeed, School, WorkOutline } from '@material-ui/icons'
+import { useContext } from 'react'
+import { AuthContext } from '../../context/AuthContext'
 import CloseFriend from '../closeFriend/CloseFriend'
 import './sidebar.css'
-import { Users } from '../../dummyData'
 
 function Sidebar() {
+    const { user } = useContext(AuthContext);
+
     return (
         <div className="sidebar">
             <div className="sidebarWrapper">
@@ -49,8 +52,8 @@ function Sidebar() {
                 <hr className="sidebarHr" />
                 <ul className="sidebarFriendList">
                     {
-                        Users.map((user)=>{
-                            return <CloseFriend key={user.id} user={user}/>
+                        user.success && user.user?.followings.map((user)=>{
+                            return <CloseFriend key={user} user={user}/>
                         })
                     }
                 </ul>

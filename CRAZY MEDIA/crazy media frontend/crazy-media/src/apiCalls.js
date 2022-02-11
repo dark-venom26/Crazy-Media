@@ -12,7 +12,7 @@ export const loginCall = async (userCredential, dispatch) => {
                   "auth-token": credentials.data.authToken
                 }
             };
-            const userDetails = await axios.get("auth/getuser", config);
+            const userDetails = await axios.get("/auth/getuser", config);
             const authTokenData = JSON.stringify(credentials.data)
             localStorage.setItem("auth-token", authTokenData);
             dispatch({type: "GET_USER", payload: userDetails.data});
@@ -35,7 +35,7 @@ export const getUserCall = async (authToken, dispatch) => {
         }
       }
     try{
-        const res = await axios.get("auth/getuser", config);
+        const res = await axios.get("/auth/getuser", config);
         dispatch({type: "GET_USER", payload: res.data});
     }catch(err){
         dispatch({type: "LOGIN_FAILURE", payload: err});

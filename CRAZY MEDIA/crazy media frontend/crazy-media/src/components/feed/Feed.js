@@ -19,7 +19,11 @@ function Feed(props) {
             }
             try{
                 const res = props.username ? await axios.get("/post/profile/" + props.username) : await axios.get("/post/timeline/all", config);
-                setPosts(res.data);
+                setPosts(
+                    res.data.sort((p1,p2)=>{
+                        return new Date(p2.createdAt) - new Date(p1.createdAt);
+                    })
+                );
             }catch(err){
                 console.log(err);
             }
@@ -32,7 +36,8 @@ function Feed(props) {
                 <Share/>
                 {posts.length === 0 ? <p className='noPost'>No posts available</p> : posts.map((post)=>{
                     return <Post key={post._id} post={post}/>
-                })}
+                })
+                }
             </div>
         </div>
     )

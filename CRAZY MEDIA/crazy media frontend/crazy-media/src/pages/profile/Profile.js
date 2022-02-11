@@ -11,20 +11,14 @@ function Profile() {
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
     const [user, setUser] = useState({});
     const username = useParams().username;
-    const authToken = localStorage.getItem('auth-token');
 
     useEffect(() => {
         const fetchUser = async ()=>{
-            const config = {
-                headers: {
-                  "auth-token": authToken
-                }
-            };
-            const res = await axios.get(`/user?username=${username}`, config)
+            const res = await axios.get(`/user?username=${username}`);
             setUser(res.data)
         }
         fetchUser()
-    }, [username, authToken])
+    }, [username])
 
     return (
         <>

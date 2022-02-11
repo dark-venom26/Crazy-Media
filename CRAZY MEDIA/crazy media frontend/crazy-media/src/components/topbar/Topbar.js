@@ -43,8 +43,8 @@ function Topbar() {
                         <span className="topbarIconBadge">4</span>
                     </div>
                 </div>
-                <Link to={`profile/${user.user?.username}`}>
-                    <img src={user.user?.profilePicture ? PF + user.user?.profilePicture : user.user?.gender ===2 ? PF + "persons/woman.png" : PF + "persons/man.png"} alt="" className="topbarImg" />
+                <Link to={`/profile/${user.user?.username}`}>
+                    <img src={user?.success ? PF + user.user?.profilePicture : user.user?.gender ===2 ? PF + "persons/woman.png" : PF + "persons/man.png"} alt="" className="topbarImg" />
                 </Link>
             </div>
         </div>

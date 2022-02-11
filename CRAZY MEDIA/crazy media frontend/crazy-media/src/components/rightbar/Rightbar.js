@@ -1,10 +1,35 @@
+import { useContext, useEffect, useState } from 'react';
 import Online from '../online/Online'
+import axios from 'axios';
+import { AuthContext } from '../../context/AuthContext'
 import './rightbar.css'
-import { Users } from '../../dummyData'
+import ProfileFriend from '../profileFriend/ProfileFriend';
 
 function Rightbar(props) {
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+    
     const HomeRightbar = () => {
+        const {user} = useContext(AuthContext);
+        const [onlineUser, setOnlineUser] = useState([])
+
+        useEffect(()=>{
+            var mount = true
+            const callback = async(id) =>{
+                await axios.get(`/user?userId=${id}`).then(response=>{
+                    if(mount){
+                        setOnlineUser(olduser=>[...olduser,response.data])
+                    }
+                })
+            }
+            
+            user?.user?.followings?.forEach(id => {
+                callback(id);
+            });
+            return()=>{
+                mount = false
+            }
+        },[user?.user?.followings])
+        
         return (
             <>
                 <div className="birthdayContainer">
@@ -13,12 +38,12 @@ function Rightbar(props) {
                         <b>Jenny Fox</b> and <b>3 other friends</b> have a birthday today
                     </span>
                 </div>
-                <img src="assets/ads.jpg" alt="" className="rightbarAd" />
+                <img src={`${PF}ads.jpg`} alt="" className="rightbarAd" />
                 <h4 className="rightbarTitle">Online Friends</h4>
                 <ul className="rightbarFriendList">
                     {
-                        Users.map((user) => {
-                            return <Online key={user.id} user={user} />
+                        onlineUser?.length ===0 ? "No one is online" : onlineUser?.map((user) => {
+                            return <Online key={user._id} user={user} />
                         })
                     }
                 </ul>
@@ -27,6 +52,7 @@ function Rightbar(props) {
     }
 
     const ProfileRightbar = () => {
+        
         return(
             <>
                 <h4 className="rightbarTitle">User Information</h4>
@@ -50,19 +76,11 @@ function Rightbar(props) {
                 </div>
                 <h4 className="rightbarTitle">User friends</h4>
                 <div className="rightbarFollowings">
-                    <div className="rightbarFollowing">
-                        <img src="assets/users/2.jpg" alt="" className="rightbarFollowingImg" />
-                        <span className="rightbarFollowingName">Ragnar Lothbrok</span>
-                    </div>
-                    <div className="rightbarFollowing">
-                        <img src="assets/users/3.jpg" alt="" className="rightbarFollowingImg" />
-                        <span className="rightbarFollowingName">Rose Dorcy</span>
-                    </div>
-                    <div className="rightbarFollowing">
-                        <img src="assets/users/4.jpg" alt="" className="rightbarFollowingImg" />
-                        <span className="rightbarFollowingName">Olivia Resov</span>
-                    </div>
-
+                    {
+                        props.user?.followings?.length !==0 ? props.user?.followings?.map((user)=>{
+                            return <ProfileFriend key={user} user={user}/>
+                        }) : "This user have no friends"
+                    }
                 </div>
             </>
         )
@@ -71,7 +89,7 @@ function Rightbar(props) {
     return (
         <div className="rightbar">
             <div className="rightbarWrapper">
-                {props.user ? <ProfileRightbar /> : <HomeRightbar/>}
+                {props.user? <ProfileRightbar /> : <HomeRightbar/>}
             </div>
         </div>
     )

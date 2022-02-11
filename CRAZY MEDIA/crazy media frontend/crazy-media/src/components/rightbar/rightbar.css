@@ -65,19 +65,5 @@
 .rightbarFollowings{
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-}
-
-.rightbarFollowing{
-    display: flex;
-    flex-direction: column;
-    margin: 0 0 20px 0;
-    cursor: pointer;
-}
-
-.rightbarFollowingImg{
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 5px;
+    column-gap: 20px;
 }
