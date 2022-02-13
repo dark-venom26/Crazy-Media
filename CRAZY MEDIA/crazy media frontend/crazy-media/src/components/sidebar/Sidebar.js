@@ -6,7 +6,7 @@ import './sidebar.css'
 
 function Sidebar() {
     const { user } = useContext(AuthContext);
-
+    
     return (
         <div className="sidebar">
             <div className="sidebarWrapper">
@@ -52,7 +52,7 @@ function Sidebar() {
                 <hr className="sidebarHr" />
                 <ul className="sidebarFriendList">
                     {
-                        user.success && user.user?.followings.map((user)=>{
+                        user.success && user.user?.followings?.map((user)=>{
                             return <CloseFriend key={user} user={user}/>
                         })
                     }

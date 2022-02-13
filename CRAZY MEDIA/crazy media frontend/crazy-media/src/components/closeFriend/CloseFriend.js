@@ -17,7 +17,7 @@ function CloseFriend(props) {
     return (
         <li className="sidebarFriend">
             <Link to={`/profile/${user.username}`}>
-                <img src={user.profilePicture ? PF + user.profilePicture : user?.gender ===2 ? PF + "persons/woman.png" : PF + "persons/man.png"} alt="" className="sidebarFriendImg" />
+                <img src={user.profilePicture ? PF + user.profilePicture : user?.gender ===2 ? "/asssets/persons/woman.png" : "/assets/persons/man.png"} alt="" className="sidebarFriendImg" />
             </Link>
             <span className="sidebarFriendName">{user.username}</span>
         </li>

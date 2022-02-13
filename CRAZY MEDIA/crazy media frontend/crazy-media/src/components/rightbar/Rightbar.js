@@ -4,12 +4,21 @@ import axios from 'axios';
 import { AuthContext } from '../../context/AuthContext'
 import './rightbar.css'
 import ProfileFriend from '../profileFriend/ProfileFriend';
+import { Add, Remove } from '@material-ui/icons';
 
 function Rightbar(props) {
-    const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+    const authToken = localStorage.getItem("auth-token");
+    const authTokenData = JSON.parse(authToken);
+
+    const {user, dispatch} = useContext(AuthContext);
+    const config = {
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+            "auth-token": authTokenData.authToken
+        }
+    }
     
     const HomeRightbar = () => {
-        const {user} = useContext(AuthContext);
         const [onlineUser, setOnlineUser] = useState([])
 
         useEffect(()=>{
@@ -28,17 +37,17 @@ function Rightbar(props) {
             return()=>{
                 mount = false
             }
-        },[user?.user?.followings])
+        },[])
         
         return (
             <>
                 <div className="birthdayContainer">
-                    <img className="birthdayImg" src={`${PF}birthday.png`} alt="" />
+                    <img className="birthdayImg" src="assets/birthday.png" alt="" />
                     <span className="birthdayText">
                         <b>Jenny Fox</b> and <b>3 other friends</b> have a birthday today
                     </span>
                 </div>
-                <img src={`${PF}ads.jpg`} alt="" className="rightbarAd" />
+                <img src="assets/ads.jpg" alt="" className="rightbarAd" />
                 <h4 className="rightbarTitle">Online Friends</h4>
                 <ul className="rightbarFriendList">
                     {
@@ -52,9 +61,30 @@ function Rightbar(props) {
     }
 
     const ProfileRightbar = () => {
+        const followed = user?.user?.followings?.includes(props.user?._id)
         
+        const handleFollowEvent = async ()=>{
+            try {
+                if(followed){
+                    await axios.put('/user/unfollow/'+props.user?._id,[], config)
+                    dispatch({type: 'UNFOLLOW', payload: props.user?._id});
+                }else{
+                    await axios.put('/user/follow/'+props.user?._id,[], config)
+                    dispatch({type: 'FOLLOW', payload: props.user?._id});
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
         return(
             <>
+                {props.user?.username !== user?.user?.username && (
+                    <button className='rightbarFollowButton' onClick={handleFollowEvent}>
+                        {followed ? "Unfollow" : "Follow"}
+                        {followed ? <Remove/> : <Add/>}
+                    </button>
+                )}
                 <h4 className="rightbarTitle">User Information</h4>
                 <div className="rightbarInfo">
                     <div className="rightbarInfoItem">
@@ -84,7 +114,7 @@ function Rightbar(props) {
                 </div>
             </>
         )
-    }
+    };
 
     return (
         <div className="rightbar">

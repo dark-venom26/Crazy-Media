@@ -18,7 +18,7 @@ function ProfileFriend(props) {
     return (
         <div className="rightbarFollowing">
             <Link to={`/profile/${user.username}`} className="rightbarFollowingName">
-                <img src={user.profilePicture ? PF + user.profilePicture : user?.gender ===2 ? PF + "persons/woman.png" : PF + "persons/man.png"} alt="" className="rightbarFollowingImg" />
+                <img src={user.profilePicture ? PF + user.profilePicture : user?.gender ===2 ? "/asssets/persons/woman.png" : "/assets/persons/man.png"} alt="" className="rightbarFollowingImg" />
                 <span >{user.username}</span>
             </Link>
         </div>

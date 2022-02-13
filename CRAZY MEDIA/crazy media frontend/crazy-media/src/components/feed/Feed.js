@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
 import Post from '../post/Post'
 import Share from '../share/Share'
 import './feed.css'
@@ -8,6 +9,7 @@ function Feed(props) {
     const [posts, setPosts] = useState([]);
     const authToken = localStorage.getItem("auth-token");
     const authTokenData = JSON.parse(authToken);
+    const {user} = useContext(AuthContext);
     
     useEffect(() => {
         const fetchPosts = async ()=>{
@@ -33,7 +35,7 @@ function Feed(props) {
     return (
         <div className="feed">
             <div className="feedWrapper">
-                <Share/>
+                {(!props.username || props.username === user?.user?.username) && <Share/>}
                 {posts.length === 0 ? <p className='noPost'>No posts available</p> : posts.map((post)=>{
                     return <Post key={post._id} post={post}/>
                 })

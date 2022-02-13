@@ -2,10 +2,7 @@ const AuthReducer = (state, action) => {
     switch (action.type){
         case "LOGIN_START":
             return {
-                authToken: {success: false, authToken: null},
-                user: {success: false, user: null},
-                isFetching: true,
-                error: false
+                ...state
             };
         case "LOGIN_SUCCESS":
             return {
@@ -14,6 +11,11 @@ const AuthReducer = (state, action) => {
                 isFetching: true,
                 error: false
             };
+        case "GET_USER":
+            return {
+                ...state,
+                user: action.payload,
+            };
         case "LOGIN_FAILURE":
             return {
                 authToken: {success: false, authToken: null},
@@ -21,19 +23,36 @@ const AuthReducer = (state, action) => {
                 isFetching: false,
                 error: action.payload
             };
-        case "GET_USER":
-            return {
-                authToken: {success: false, authToken: null},
-                user: action.payload,
-                isFetching: false,
-                error: false
-            };
         case "LOGOUT_SUCCESS":
             return {
                 authToken: {success: false, authToken: null},
                 user: {success: false, user: null},
                 isFetching: false,
                 error: false
+            };
+        case "FOLLOW":
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    user: {
+                        ...state.user.user,
+                        followings: [...state.user?.user?.followings, action.payload],
+                    },
+                },
+            };
+        case "UNFOLLOW":
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    user: {
+                        ...state.user.user,
+                        followings: state.user?.user?.followings?.filter(
+                            (followings)=> followings !== action.payload
+                        )
+                    },
+                },
             };
         default:
             return state;

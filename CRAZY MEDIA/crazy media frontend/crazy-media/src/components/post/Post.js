@@ -90,7 +90,7 @@ function Post(props) {
                 <div className="postTop">
                     <div className="postTopLeft">
                         <Link to={`/profile/${user.username}`}>
-                        <img className="postProfileImg" src={user.profilePicture ? PF + user.profilePicture : user?.gender ===2 ? PF + "persons/woman.png" : PF + "persons/man.png"} alt="" />
+                        <img className="postProfileImg" src={user.profilePicture ? PF + user.profilePicture : user?.gender ===2 ? "/asssets/persons/woman.png" : "/assets/persons/man.png"} alt="" />
                         </Link>
                         <span className="postUsername">{user.username}</span>
                         <span className="postDate">{format(props.post.createdAt)}</span>
@@ -105,9 +105,9 @@ function Post(props) {
                 </div>
                 <div className="postBottom">
                     <div className="postBottomLeft">
-                        <img className="likeIcon" src={`${PF}like.png`} alt="" onClick={likeHandler} />
+                        <img className="likeIcon" src="/assets/like.png" alt="" onClick={likeHandler} />
                         <span className="postLikeCounter">{like.like}</span>
-                        <img className="likeIcon" src={`${PF}heart.png`} alt="" onClick={heartHandler} />
+                        <img className="likeIcon" src="/assets/heart.png" alt="" onClick={heartHandler} />
                         <span className="postLikeCounter">{like.heart}</span>
                     </div>
                     <div className="postBottomRight">

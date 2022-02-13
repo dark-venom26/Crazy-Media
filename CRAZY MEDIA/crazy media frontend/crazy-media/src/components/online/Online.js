@@ -8,7 +8,7 @@ function Online(props) {
         <li className="rightbarFriend">
             <div className="rightbarProfileImgContainer">
             <Link to={`/profile/${props.user?.username}`}>
-                <img src={props.user?.profilePicture ? PF + props.user?.profilePicture : props.user?.gender ===2 ? PF + "persons/woman.png" : PF + "persons/man.png"} alt="" className="rightbarProfileImg" />
+                <img src={props.user?.profilePicture ? PF + props.user?.profilePicture : props.user?.gender ===2 ? "/asssets/persons/woman.png" : "/assets/persons/man.png"} alt="" className="rightbarProfileImg" />
                 <span className="rightbarOnline"></span>
             </Link>
 
