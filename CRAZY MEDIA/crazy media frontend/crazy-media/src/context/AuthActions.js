@@ -23,10 +23,16 @@ export const GetUser = (user) => ({
 
 export const Follow = (userId) => ({
     type: "FOLLOW",
-    payload:userId
+    payload: userId
 })
 
 export const UnFollow = (userId) => ({
     type: "UNFOLLOW",
-    payload:userId
+    payload: userId
 })
+
+export const Post = (post) => ({
+    type: "POST",
+    payload: post
+})
+

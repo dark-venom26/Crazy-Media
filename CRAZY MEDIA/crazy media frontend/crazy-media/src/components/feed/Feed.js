@@ -9,7 +9,7 @@ function Feed(props) {
     const [posts, setPosts] = useState([]);
     const authToken = localStorage.getItem("auth-token");
     const authTokenData = JSON.parse(authToken);
-    const {user} = useContext(AuthContext);
+    const {user, post, dispatch} = useContext(AuthContext);
     
     useEffect(() => {
         const fetchPosts = async ()=>{
@@ -21,6 +21,7 @@ function Feed(props) {
             }
             try{
                 const res = props.username ? await axios.get("/post/profile/" + props.username) : await axios.get("/post/timeline/all", config);
+                    
                 setPosts(
                     res.data.sort((p1,p2)=>{
                         return new Date(p2.createdAt) - new Date(p1.createdAt);
@@ -31,7 +32,7 @@ function Feed(props) {
             }
         }
         fetchPosts()
-    }, [props.username, authTokenData.authToken])
+    }, [props.username, authTokenData.authToken, post, dispatch])
     return (
         <div className="feed">
             <div className="feedWrapper">

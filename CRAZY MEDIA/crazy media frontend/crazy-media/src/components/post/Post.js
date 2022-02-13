@@ -13,6 +13,7 @@ function Post(props) {
     const {user:currentUser} = useContext(AuthContext)
     const authToken = localStorage.getItem("auth-token");
     const authTokenData = JSON.parse(authToken);
+
     const config = {
         headers: {
             "Access-Control-Allow-Origin": "*",
@@ -101,7 +102,7 @@ function Post(props) {
                 </div>
                 <div className="postCenter">
                     <span className="postText">{props.post.desc}</span>
-                    <img className="postImg" src={PF + props.post?.img} alt="" />
+                    <img className="postImg" src={props.post?.img && PF + props.post?.img} alt="" />
                 </div>
                 <div className="postBottom">
                     <div className="postBottomLeft">

@@ -34,7 +34,6 @@
 }
 
 .shareBottom{
-    display: flex;
     align-items: center;
     justify-content: center;
 }
@@ -70,6 +69,11 @@
     margin: 0 20px 0 0;
     color: #fff;
     cursor: pointer;
+    width: 80px;
+}
+
+.shareButton:disabled{
+    cursor: not-allowed;
 }
 
 #file{
@@ -94,3 +98,4 @@
     cursor: pointer;
     opacity: 0.7;
 }
+

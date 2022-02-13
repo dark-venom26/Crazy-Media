@@ -3,13 +3,19 @@ import { Cancel, EmojiEmotions, Label, PermMedia, Room } from '@material-ui/icon
 import { useContext, useRef, useState } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import axios from 'axios'
+import { CircularProgress } from '@material-ui/core'
+import { useParams } from 'react-router-dom'
 require('dotenv').config()
 
 function Share() {
+    const username = useParams().username;
+
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-    const {user} = useContext(AuthContext);
+    const {user, dispatch} = useContext(AuthContext);
     const desc = useRef()
     const [file, setFile] = useState(null);
+    const [shareDisable, setShareDisable] = useState(false)
+
     const authToken = localStorage.getItem("auth-token");
     const authTokenData = JSON.parse(authToken);
     const config = {
@@ -19,8 +25,10 @@ function Share() {
         }
     }
     
+    
     const submitHandler = async (e) => {
         e.preventDefault()
+        setShareDisable(true)
         const newPost = {
             userId: user?.user?._id,
             desc: desc.current.value
@@ -40,7 +48,13 @@ function Share() {
         
         try {
             await axios.post('/post',newPost, config)
-            window.location.reload()
+            desc.current.value = ""
+            setFile(null)
+            setShareDisable(false)
+
+            const posts = username ? await axios.get("/post/profile/" + username) : await axios.get('/post/timeline/all',config)
+            dispatch({type: "POST", payload: posts.data});
+
         } catch (err) {
             console.log(err);
         }
@@ -49,9 +63,10 @@ function Share() {
     return (
         <div className="share">
             <div className="shareWrapper">
+                <form onSubmit={submitHandler} className="shareBottom">
                 <div className="shareTop">
                     <img className="shareProfileImg" src={user?.success ? PF + user?.user?.profilePicture : user?.user?.gender ===2 ? "/asssets/persons/woman.png" : "/assets/persons/man.png"} alt="" />
-                    <input placeholder={"What's in your mind " + user?.user?.username + "?"} className="shareInput" ref={desc}/>
+                    <input name='desc' minLength="2" placeholder={"What's in your mind " + user?.user?.username + "?"} className="shareInput" ref={desc} required/>
                 </div>
                 <hr className="shareHr" />
                 {file && (
@@ -60,12 +75,11 @@ function Share() {
                         <Cancel className='shareCancelImg' onClick={()=>setFile(null)}/>
                     </div>
                 )}
-                <form onSubmit={submitHandler} className="shareBottom">
                     <div className="shareOptions">
                         <label htmlFor='file' className="shareOption">
                             <PermMedia htmlColor="tomato" className="shareIcon"/>
                             <div className="shareOptionText">Photo / Video</div>
-                            <input type="file" id="file" accept=".png,.jpeg,.jpg" onChange={(e)=>setFile(e.target.files[0])}/>
+                            <input name='file' type="file" id="file" accept=".png,.jpeg,.jpg" onChange={(e)=>setFile(e.target.files[0])}/>
                         </label>
                         <div className="shareOption">
                             <Label htmlColor="blue" className="shareIcon"/>
@@ -79,8 +93,8 @@ function Share() {
                             <EmojiEmotions htmlColor="goldenrod" className="shareIcon"/>
                             <div className="shareOptionText">Feelings</div>
                         </div>
+                        <button type='submit' className="shareButton" disabled={shareDisable}>{shareDisable? <CircularProgress color="inherit" size="15px"/> :"Share"}</button>
                     </div>
-                    <button type='submit' className="shareButton">Share</button>
                 </form>
             </div>
         </div>
