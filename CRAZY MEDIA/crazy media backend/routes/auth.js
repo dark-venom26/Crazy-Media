@@ -30,6 +30,13 @@ router.post("/register", [
             username: req.body.username,
             email: req.body.email,
             password: hashedPassword,
+            from: req.body.from,
+            desc: req.body.desc,
+            gender: req.body.gender,
+            relationship: req.body.relationship,
+            profilePicture: req.body.profilePicture,
+            coverPicture: req.body.coverPicture
+            
         })
 
         const data= {

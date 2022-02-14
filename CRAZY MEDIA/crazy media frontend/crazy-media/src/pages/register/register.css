@@ -41,8 +41,6 @@
 }
 
 .registerContainer{
-    height: 300px;
-    padding: 30px;
     border-radius: 8px;
     display: flex;
     flex-direction: column;
@@ -50,9 +48,8 @@
 }
 
 .registerInput{
-    height: 50px;
+    height: 40px;
     border: 0;
-    border-bottom: 1px solid #1c1715;
     border-radius: 5px;
     background-color: #faf1ffb8;
     color: black;
@@ -71,7 +68,8 @@
     font-size: 20px;
     font-weight: 500;
     cursor: pointer;
-    margin: 0 0 4px 0;
+    margin: 10px 0 4px 0;
+    
 }
 
 .registerForget{
@@ -97,4 +95,57 @@
     color: white;
     font-size: 20px;
     font-weight: 500;
+}
+
+.radioInputContainer{
+    display: flex;
+    align-items: center;
+    margin: 10px 0 0 0;
+}
+
+.primaryLabel{
+    font-size: 20px;
+}
+
+.radioInputs{
+    margin: 0 15px;
+}
+
+.secondaryLabel{
+    font-size: 18px;
+}
+
+.imageContainer{
+    margin: 10px 0 0 0;
+}
+
+.fileInput{
+    display: none;
+}
+
+.imgFile{
+    position: relative;
+}
+
+.imgIcon{
+    position: absolute;
+    margin: 0 0 0 15px;
+    cursor: pointer;
+}
+
+.imgPreviewContainer{
+    position: relative;
+    margin-left: 12px;
+}
+
+.previewImg{
+    width: 50px;
+    object-fit: cover;
+}
+
+.cancelPreviewImg{
+    position: absolute;
+    right: 0.3px;
+    opacity: 0.7;
+    cursor: pointer;
 }

@@ -50,9 +50,8 @@
 }
 
 .loginInput{
-    height: 50px;
+    height: 40px;
     border: 0;
-    border-bottom: 1px solid #1c1715;
     border-radius: 5px;
     background-color: #faf1ffb8;
     font-size: 18px;
