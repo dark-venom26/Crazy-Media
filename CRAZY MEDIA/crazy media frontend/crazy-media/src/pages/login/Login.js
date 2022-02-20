@@ -27,7 +27,7 @@ function Login() {
     
     return (
         <div className="login">
-            <img className="background" src="assets/background.jpg" alt="" />
+            <div className="background"></div>
             <div className="loginWrapper">
                 <div className="loginLeft">
                     <h3 className="loginLogo">Crazy Media</h3>

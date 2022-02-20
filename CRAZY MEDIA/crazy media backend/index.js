@@ -7,6 +7,8 @@ const morgan = require("morgan");
 const userRoute = require("./routes/user")
 const authRoute = require("./routes/auth")
 const postRoute = require("./routes/post")
+const conversationRoute = require("./routes/conversation")
+const messageRoute = require("./routes/messages")
 const cors = require('cors')
 const multer = require('multer')
 const path = require('path')
@@ -49,6 +51,8 @@ app.post("/api/upload", upload.single("file"), (req,res)=>{
 app.use("/api/user",userRoute)
 app.use("/api/auth",authRoute)
 app.use("/api/post",postRoute)
+app.use("/api/conversation", conversationRoute)
+app.use("/api/message", messageRoute)
 
 app.listen(port, ()=>{
     console.log(`Crazy Media Backend server running on http://localhost:${port}`);

@@ -82,7 +82,7 @@ function Register() {
 
     return (
         <div className="register">
-            <img className="background" src="assets/background2.jpg" alt="" />
+            <div className="background"></div>
             <div className="registerWrapper">
                 <div className="registerLeft">
                     <h3 className="registerLogo">Crazy Media</h3>

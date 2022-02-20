@@ -66,7 +66,7 @@ function Share() {
                 <form onSubmit={submitHandler} className="shareBottom">
                 <div className="shareTop">
                     <img className="shareProfileImg" src={user.user?.profilePicture ? PF + user?.user?.profilePicture : user?.user?.gender ===2 ? "/asssets/persons/woman.png" : "/assets/persons/man.png"} alt="" />
-                    <input name='desc' minLength="2" placeholder={"What's in your mind " + user?.user?.username + "?"} className="shareInput" ref={desc} required/>
+                    <input name='desc' minLength="2" placeholder={"What's in your mind " + (user?.success ? user?.user?.username : "") + "?"} className="shareInput" ref={desc} required/>
                 </div>
                 <hr className="shareHr" />
                 {file && (

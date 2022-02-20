@@ -11,6 +11,7 @@ import {
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
 import { getUserCall } from "./apiCalls";
+import Messenger from "./pages/messenger/Messenger";
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
           <Route exact path="/login" element={login ? <Navigate to="/" /> : <Login />} />
           <Route exact path="/register" element={login ? <Navigate to="/" /> : <Register />} />
           <Route exact path="/profile/:username" element={<Profile />} />
+          <Route exact path="/messenger" element={login ? <Messenger /> : <Navigate to="/"/> } />
         </Routes>
     </Router>
   )
