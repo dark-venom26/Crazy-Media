@@ -36,3 +36,8 @@ export const Post = (post) => ({
     payload: post
 })
 
+export const Socket = (data) => ({
+    type: "SOCKET",
+    payload: data
+})
+

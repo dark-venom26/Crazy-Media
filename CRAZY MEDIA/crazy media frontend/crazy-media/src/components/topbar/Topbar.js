@@ -6,12 +6,16 @@ import { AuthContext } from "../../context/AuthContext";
 import { logoutCall } from '../../apiCalls';
 require('dotenv').config()
 
-function Topbar() {
+function Topbar(props) {
     const {user, dispatch} = useContext(AuthContext);
     const PF = process.env.REACT_APP_PUBLIC_FOLDER
+    const {socket} = props;
+
     const logout = () => {
+        socket?.current?.emit("forceDisconnect",user.user?._id);
         logoutCall(dispatch);
     }
+
     return (
         <div className="topbarContainer">
             <div className="topbarLeft">

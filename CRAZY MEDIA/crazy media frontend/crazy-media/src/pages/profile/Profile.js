@@ -3,26 +3,47 @@ import Sidebar from "../../components/sidebar/Sidebar"
 import Feed from "../../components/feed/Feed"
 import Rightbar from "../../components/rightbar/Rightbar"
 import './profile.css'
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
 import { useParams } from "react-router-dom"
 import axios from "axios"
+import { AuthContext } from "../../context/AuthContext"
+import {io} from 'socket.io-client';
 
 function Profile() {
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
     const [user, setUser] = useState({});
     const username = useParams().username;
-
+    const {user:currentUser,dispatch} = useContext(AuthContext);
+    const { socket } = useContext(AuthContext);
+    const newsocket = useRef();
+    
+    if(!socket){
+        newsocket.current = io("ws://localhost:8400");
+        dispatch({type: "SOCKET", payload: socket});
+    }
+  
     useEffect(() => {
+        var mount = true;
         const fetchUser = async ()=>{
             const res = await axios.get(`/user?username=${username}`);
-            setUser(res.data)
+            if(mount){
+                setUser(res.data)
+            }
         }
         fetchUser()
+        return ()=>{
+            mount = false;
+        }
     }, [username])
+
+    // Adding user in through socket io
+    useEffect(() => {
+        socket?.current?.emit("addUser", currentUser.user?._id);
+    }, [socket, currentUser.user?._id])
 
     return (
         <>
-            <Topbar />
+            <Topbar socket={socket}/>
             <div className="profile">
                 <Sidebar/>
                 <div className="profileRight">

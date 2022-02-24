@@ -8,17 +8,28 @@ import {
   Route,
   Navigate
 } from 'react-router-dom'
-import { useContext } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { AuthContext } from "./context/AuthContext";
 import { getUserCall } from "./apiCalls";
 import Messenger from "./pages/messenger/Messenger";
+import {io} from 'socket.io-client';
 
 
 function App() {
   const {user, dispatch} = useContext(AuthContext);
   const authToken = localStorage.getItem('auth-token');
   const authTokenData = JSON.parse(authToken);
+  const socket = useRef();
+
+  // Socket
+  useEffect(() => {
+    socket.current = io("ws://localhost:8400");
+    dispatch({type: "SOCKET", payload: socket});
+  }, [socket, dispatch])
+
+
   var login = false;
+  
   if(authTokenData?.success || user?.success){
     login = true
   }

@@ -25,7 +25,9 @@ const AuthReducer = (state, action) => {
                 authToken: {success: false, authToken: null},
                 user: {success: false, user: null},
                 isFetching: false,
-                error: false
+                error: false,
+                post: null,
+                socket: {}
             };
         case "FOLLOW":
             return {
@@ -55,6 +57,11 @@ const AuthReducer = (state, action) => {
             return {
                 ...state,
                 post: action.payload
+            };
+        case "SOCKET":
+            return {
+                ...state,
+                socket: action.payload
             };
         default:
             return state;
